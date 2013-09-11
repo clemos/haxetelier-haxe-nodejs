@@ -1,11 +1,10 @@
 html
 	head
 	body
-		img(src='/image.png')
-		.greet Salut !
+		form(onsubmit='return false',action='')
+			input(type='text').input-text
+			input(type='submit', value='chat')
+		div.messages
+		script(src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
 		script(src='/socket.io/socket.io.js')
-		script(type='text/javascript').
-			var socket = io.connect('http://localhost:9000');
-			socket.on('coucou', function(data){
-				alert(data);
-			});
+		script(type='text/javascript',src='/client.js')

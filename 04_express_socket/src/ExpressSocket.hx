@@ -4,7 +4,7 @@ import js.npm.Express;
 import js.npm.express.*;
 import js.npm.Jade;
 
-class ExpressSocket {
+class ExpressSocket extends Express {
 
 	var app : Express;
 	var io : SocketIoManager;
@@ -22,8 +22,17 @@ class ExpressSocket {
 
 		io = js.Node.require('socket.io').listen( http );
 		io.sockets.on("connection", function( socket : SocketNamespace ){
-			trace("new connection");
-			io.sockets.emit( "coucou" , socket.id );
+			socket.on("chat", function(val : ChatIn ){
+				trace("recu",val);
+				var out : ChatOut = {
+					text : val.text,
+					user : socket.id,
+					color : "#f00"
+				};
+				io.sockets.emit("chat", out );
+			});
+			//trace("new connection");
+			//io.sockets.emit( "coucou" , socket.id );
 		});
 
 		http.listen(9000);

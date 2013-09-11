@@ -1,6 +1,5 @@
 {
 	"dependencies" : {
-		"http" : "*",
 		"jade" : "*",
 		"net" : "*",
 		"url" : "*",

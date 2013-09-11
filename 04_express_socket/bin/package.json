@@ -1,6 +1,8 @@
 {
 	"dependencies" : {
+		"http" : "*",
 		"jade" : "*",
+		"socket.io" : "latest",
 		"net" : "*",
 		"url" : "*",
 		"crypto" : "*",

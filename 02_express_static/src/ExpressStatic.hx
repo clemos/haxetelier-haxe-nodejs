@@ -16,7 +16,7 @@ class ExpressStatic {
 	}
 	function handle( req : Request , res : Response ){
 		var url = req.path;
-		res.send( '<img src="/image.png">' );
+		res.send( '<img src="/image.png"> Hello $url' );
 	}
 	
 	static function main(){

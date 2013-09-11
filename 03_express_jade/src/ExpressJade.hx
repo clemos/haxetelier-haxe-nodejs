@@ -19,7 +19,8 @@ class ExpressJade {
 	}
 	function handle( req : Request , res : Response ){
 		var url = req.path;
-		res.render( 'index' );
+		res.render( 'index' , { url : url } );
+		
 	}
 	
 	static function main(){
