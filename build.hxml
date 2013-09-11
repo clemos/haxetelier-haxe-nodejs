@@ -1,0 +1,39 @@
+
+# Server (js:server.js)
+-main SimpleHttp
+-js 00_simple_http/bin/server.js
+-cp lib/node-api
+-cp 00_simple_http/src
+
+--next
+# Server (js:server.js)
+-main SimpleExpress
+-js 01_simple_express/bin/server.js
+-cp lib/node-api
+-cp 01_simple_express/src
+--macro npm.Package.export('01_simple_express/bin/package.json')
+
+--next
+# Server (js:server.js)
+-main ExpressStatic
+-js 02_express_static/bin/server.js
+-cp lib/node-api
+-cp 02_express_static/src
+--macro npm.Package.export('02_express_static/bin/package.json')
+
+--next
+# Server (js:server.js)
+-main ExpressJade
+-js 03_express_jade/bin/server.js
+-cp lib/node-api
+-cp 03_express_jade/src
+--macro npm.Package.export('03_express_jade/bin/package.json')
+
+--next
+# Server (js:server.js)
+-main ExpressSocket
+-js 04_express_socket/bin/server.js
+-cp lib/node-api
+-cp lib/nodejs_externs
+-cp 04_express_socket/src
+--macro npm.Package.export('04_express_socket/bin/package.json')

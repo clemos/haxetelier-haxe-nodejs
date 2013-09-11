@@ -1,0 +1,14 @@
+{
+	"dependencies" : {
+		"http" : "*",
+		"jade" : "*",
+		"net" : "*",
+		"url" : "*",
+		"crypto" : "*",
+		"stream" : "*",
+		"connect" : "*",
+		"events" : "*",
+		"express" : "latest",
+		"socket.io" : "latest"
+	}
+}

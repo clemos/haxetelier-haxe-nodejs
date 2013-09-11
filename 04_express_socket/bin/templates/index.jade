@@ -1,0 +1,11 @@
+html
+	head
+	body
+		img(src='/image.png')
+		.greet Salut !
+		script(src='/socket.io/socket.io.js')
+		script(type='text/javascript').
+			var socket = io.connect('http://localhost:9000');
+			socket.on('coucou', function(data){
+				alert(data);
+			});
