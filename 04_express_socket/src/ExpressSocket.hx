@@ -4,7 +4,7 @@ import js.npm.Express;
 import js.npm.express.*;
 import js.npm.Jade;
 
-class ExpressSocket extends Express {
+class ExpressSocket  {
 
 	var app : Express;
 	var io : SocketIoManager;
