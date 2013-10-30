@@ -9,6 +9,11 @@ html
 				div(style='color:' + log.color)
 					b= log.user
 					span= log.text
+
+		div.test 
+			span TEST 
+			span= session.test
+			
 		script(src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
 		script(src='/socket.io/socket.io.js')
 		script(type='text/javascript',src='/client.js')

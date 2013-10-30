@@ -1,8 +1,13 @@
 import js.node.SocketIo;
+import js.npm.connect.CookieParser;
 import js.npm.connect.Static;
 import js.npm.Express;
 import js.npm.express.*;
 import js.npm.Jade;
+
+import js.Node.*;
+
+using js.npm.connect.Session;
 
 class ExpressSocket  {
 
@@ -10,18 +15,20 @@ class ExpressSocket  {
 	var io : SocketIoManager;
 	var chatLog: ChatLog;
 	
-	function new( port : Int ){
+	function new(){
 
-		js.npm.Mongoose._.connect( js.Node.process.env.MONGOHQ_URL );
+		js.npm.Mongoose._.connect( process.env.MONGOHQ_URL );
 
 		chatLog = new ChatLog();
 
 		app = new Express();
+		app.use( new CookieParser('toto') );
+		app.use( new Session( { secret : 'toto' } ) );
 
-		app.set("views" , js.Node.__dirname + "/templates" );
+		app.set("views" , __dirname + "/templates" );
 		app.set("view engine" , "jade" );
 
-		app.use( new Static( js.Node.__dirname + "/public" ) );
+		app.use( new Static( __dirname + "/public" ) );
 		app.get("*",handle);
 		
 		var http = js.node.Http.createServer(app);
@@ -51,25 +58,33 @@ class ExpressSocket  {
 			//io.sockets.emit( "coucou" , socket.id );
 		});
 
-		var port = 9000;
+		/*var port = 9000;
 
 		if( js.Node.process.env.PORT != null ){
 			port = js.Node.process.env.PORT;
-		}
+		}*/
 
-		http.listen( port );
+		http.listen( untyped ( process.env.PORT || 9000 ) );
 	}
 
 	function handle( req : Request , res : Response ){
+
+		var session = req.session();
+
+		if( session.test == null ){
+			session.test = 0;
+		}
+		session.test++;
+
 		chatLog.history(function(logs){
 
-			res.render( 'index' , { messages : logs } );
+			res.render( 'index' , { messages : logs , session : session } );
 
 		});
 	}
 	
 	static function main(){
-		new ExpressSocket(9000);
+		new ExpressSocket();
 	}
 	
 }
