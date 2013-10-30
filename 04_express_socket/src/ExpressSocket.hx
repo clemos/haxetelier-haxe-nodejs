@@ -8,8 +8,14 @@ class ExpressSocket  {
 
 	var app : Express;
 	var io : SocketIoManager;
-
+	var chatLog: ChatLog;
+	
 	function new( port : Int ){
+
+		js.npm.Mongoose._.connect( js.Node.process.env.MONGOHQ_URL );
+
+		chatLog = new ChatLog();
+
 		app = new Express();
 
 		app.set("views" , js.Node.__dirname + "/templates" );
@@ -23,24 +29,43 @@ class ExpressSocket  {
 		io = js.Node.require('socket.io').listen( http );
 		io.sockets.on("connection", function( socket : SocketNamespace ){
 			socket.on("chat", function(val : ChatIn ){
-				trace("recu",val);
+				//trace("recu",val);
 				var out : ChatOut = {
 					text : val.text,
 					user : socket.id,
 					color : "#f00"
 				};
-				io.sockets.emit("chat", out );
+
+				chatLog.add( {
+					user : out.user,
+					text : out.text,
+					date : Date.now(),
+					color : out.color
+				}, function(){
+					io.sockets.emit("chat", out );	
+				});
+
+				
 			});
 			//trace("new connection");
 			//io.sockets.emit( "coucou" , socket.id );
 		});
 
-		http.listen(9000);
+		var port = 9000;
+
+		if( js.Node.process.env.PORT != null ){
+			port = js.Node.process.env.PORT;
+		}
+
+		http.listen( port );
 	}
 
 	function handle( req : Request , res : Response ){
-		var url = req.path;
-		res.render( 'index' );
+		chatLog.history(function(logs){
+
+			res.render( 'index' , { messages : logs } );
+
+		});
 	}
 	
 	static function main(){

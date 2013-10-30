@@ -1,5 +1,9 @@
 {
 	"dependencies" : {
-		
+		"jade" : "*",
+		"socket.io" : "*",
+		"mongoose" : "*",
+		"connect" : "*",
+		"express" : "latest"
 	}
 }

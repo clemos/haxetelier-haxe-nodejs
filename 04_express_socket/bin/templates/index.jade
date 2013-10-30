@@ -5,6 +5,10 @@ html
 			input(type='text').input-text
 			input(type='submit', value='chat')
 		div.messages
+			each log in messages
+				div(style='color:' + log.color)
+					b= log.user
+					span= log.text
 		script(src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
 		script(src='/socket.io/socket.io.js')
 		script(type='text/javascript',src='/client.js')
